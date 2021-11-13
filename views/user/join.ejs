@@ -24,8 +24,7 @@
                 font-size: 24px;
                 padding: 20px 0 20px 0;
             }
-            .login-form input[type="password"],
-            .login-form input[type="text"] {
+            .login-form input {
                 width: 100%;
                 padding: 15px;
                 border: 1px solid #dddddd;
@@ -74,19 +73,19 @@
             <div class="container px-lg-5">
                 <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
                     <div class="m-4 m-lg-5">
-                        <h1 class="display-5 fw-bold">Login</h1><br><br>
+                        <h1 class="display-5 fw-bold">Join us</h1><br><br>
                         <div class="login-form">
-                            <form action="/users/login" method="POST">
-                                <input type="text" name="userEmail" placeholder="Email" required>
+                            <form action="/users/join" method="POST">
+                                <input type="email" name="userEmail" placeholder="Email" required>
+                                <input type="text" name="username" placeholder="Username" required>
                                 <input type="password" name="password" placeholder="Password" required>
-                                <input type="submit" value="Login">
+                                <input type="password" name="password_again" placeholder="Password again" required>
+                                <input type="submit" value="Join Us">
                             </form><br>
-                            <a href="/users/join"><button>Join Us</button></a>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-
     </body>
 </html>

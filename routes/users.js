@@ -9,12 +9,12 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render("user/signup");
+router.get('/join', function(req, res, next) {
+  res.render("user/join");
 });
 
 
-router.post("/sign_up", async function(req,res,next){
+router.post("/join", async function(req,res,next){
   let body = req.body;
 
   let inputPassword = body.password;
@@ -28,7 +28,7 @@ router.post("/sign_up", async function(req,res,next){
       salt: salt
   })
 
-  res.redirect("/user/sign_up");
+  res.redirect("/users/login");
 });
 
 // 메인 페이지
