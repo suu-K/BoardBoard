@@ -1,33 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Board Board</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container px-lg-5">
-                <a class="navbar-brand" href="Main.html">Board Board</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="Login.html">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Games.html">Games</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Party.html">Party</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Notice.html">Notice</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </body>
-    </html>
+<br>
+<br>
+<table class="table" style="padding-left: 10%;padding-right: 10%;">
+    <thead>
+        <tr>
+            <th style>번호</th>
+            <th style>제목</th>
+            <th style>장소</th>
+            <th style>모임일</th>
+            <th style>작성일</th>
+            <th>호스트</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%if (posts) {%>
+            <% for(var post in posts){ %>
+                <tr>
+                    <th><%=post.id%></th>
+                    <th><%=post.title%></th>
+                    <th><%=post.date%></th>
+                    <th><%=post.createdat%></th>
+                    <th><%=post.writer%></th>
+            </tr>
+            <%}%>
+        <%}%>
+    </tbody>
+</table>
+
+<button>모임 생성</button>
+
+
+
+

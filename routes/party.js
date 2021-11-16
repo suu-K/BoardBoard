@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const mysql = require('mysql');
+const models = require('../models');
 const reply = require('../models/reply');
 
 let client = mysql.createConnection({
@@ -27,6 +28,9 @@ router.get('/post/:postId', function (req, res, next) {
     }).then(posts => {
         res.render('party/party', { posts: posts })
     });
+});
+router.get('/writePost', function(req, res, next) {
+    res.render('party/writePost');
 });
 //게시글 작성 요청
 router.post('/post', function (req, res, next) {

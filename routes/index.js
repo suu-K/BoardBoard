@@ -1,4 +1,5 @@
 var express = require('express');
+const session = require('express-session');
 var router = express.Router();
 const mysql = require('mysql');
 
@@ -10,7 +11,7 @@ let client = mysql.createConnection({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { session: req.session });
 });
 
 //페이지 전환

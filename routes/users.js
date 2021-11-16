@@ -59,14 +59,14 @@ router.post("/login", async function(req,res,next){
   let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
 
   if(dbPassword === hashPassword){
-      console.log("비밀번호 일치");
+      console.log("correct password");
       // 세션 설정
       req.session.email = body.userEmail;
   }
   else{
-      console.log("비밀번호 불일치");
+      console.log("incoreect password");
   }
-  res.redirect("/user/login");
+  res.redirect("/");
 });
 //로그아웃 요청
 router.get("/logout", function(req,res,next){

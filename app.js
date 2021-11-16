@@ -4,14 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
 var logger = require('morgan');
+const expressLayouts=require('express-ejs-layouts');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var partyRouter = require('./routes/party');
 
 var app = express();
+app.use(expressLayouts);
 
 const models = require("./models/index.js");
+const { application } = require('express');
 
 models.sequelize.sync().then( () => {
     console.log(" DB connect success");
@@ -32,9 +35,11 @@ app.use(session({
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
+app.set('layout','./layouts/layout');
+app.set("layout extractScripts",true);
 
 app.use(logger('dev'));
 app.use(express.json());
