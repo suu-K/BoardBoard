@@ -6,14 +6,17 @@ const crypto = require('crypto');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+  if(req.cookies){
+    console.log(req.cookies);
+}
 
+res.send("환영합니다 ~");
+});
+//회원가입 화면
 router.get('/join', function(req, res, next) {
   res.render("user/join");
 });
-
-
+//회원가입 요청
 router.post("/join", async function(req,res,next){
   let body = req.body;
 
@@ -31,15 +34,7 @@ router.post("/join", async function(req,res,next){
   res.redirect("/users/login");
 });
 
-// 메인 페이지
-router.get('/', function(req, res, next) {
-  if(req.cookies){
-      console.log(req.cookies);
-  }
-
-  res.send("환영합니다 ~");
-});
-
+//로그인 화면
 router.get('/login', function(req, res, next) {
   let session = req.session;
 
@@ -48,7 +43,7 @@ router.get('/login', function(req, res, next) {
   });
 });
 
-// 로그인 POST
+// 로그인 요청
 router.post("/login", async function(req,res,next){
   let body = req.body;
 
@@ -73,12 +68,12 @@ router.post("/login", async function(req,res,next){
   }
   res.redirect("/user/login");
 });
-
+//로그아웃 요청
 router.get("/logout", function(req,res,next){
   req.session.destroy();
   res.clearCookie('sid');
 
-  res.redirect("/user/login")
+  res.redirect("/");
 });
 
 module.exports = router;

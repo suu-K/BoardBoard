@@ -13,15 +13,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
 //페이지 전환
 router.get('/games', function(req, res, next) {
   res.render('games');
 });
 
-router.get('/party', function(req, res, next) {
-  res.render('party');
-});
 
 router.get('/notice', function(req, res, next) {
   res.render('notice');
