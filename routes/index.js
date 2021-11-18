@@ -20,9 +20,7 @@ router.get('/games', function(req, res, next) {
 });
 
 
-router.get('/notice', function(req, res, next) {
-  res.render('notice');
-});
+
 
 
 module.exports = router;

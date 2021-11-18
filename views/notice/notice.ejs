@@ -6,10 +6,7 @@
             <tr>
                 <th style>번호</th>
                 <th style>제목</th>
-                <th style>장소</th>
-                <th style>모임일</th>
                 <th style>작성일</th>
-                <th>호스트</th>
             </tr>
         </thead>
         <tbody>
@@ -19,9 +16,7 @@
                     <tr>
                         <th><%=post.id%></th>
                         <th><%=post.title%></th>
-                        <th><%=post.date%></th>
                         <th><%=post.createdate%></th>
-                        <th><%=post.writer%></th>
                 </tr>
                 <%}%>
             <%}%>
@@ -29,7 +24,9 @@
     </table>
 </div>
 <div class="container px-lg-5">
-    <button class="btn bg-light" onclick="location.href='party/writePost'" style="position: relative; left: 92%;">모임 생성</button>
+    <%if(1) {%>
+    <button class="btn bg-light" onclick="location.href='party/writeNotice'" style="position: relative; left: 92%;">공지 작성</button>
+    <%}%>
 </div>
 
 
