@@ -26,12 +26,12 @@ router.get('/', function (req, res, next) {
         });
 });
 //공지사항 화면
-router.get('/notice/:noticeId', function (req, res, next) {
+router.get('/:noticeId', function (req, res, next) {
     let noticeId = req.params.noticeId;
 
     models.notice.findOne({ where: { id: noticeId }}
     ).then(notice => {
-        res.render('notice/notice', { notice: notice, session: req.session })
+        res.render('notice/readNotice', { notice: notice, session: req.session })
     });
 });
 

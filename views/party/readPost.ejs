@@ -10,29 +10,24 @@
                         <thead> 
                             <tr> 
                                 <th width="30%">호스트</th> 
-                                <td width="70%">여기에 작성자 username</td> 
+                                <td width="70%"><%= post.user.name %></td> 
                             </tr> 
                             <tr> 
                                 <th>모임명</th> 
-                                <td><type="text" name="partyTitle" class="form-control"></td> 
+                                <td><%= post.title %></td> 
                             </tr>
                             <tr> 
                                 <th>모임 장소</th> 
-                                <td><input type="text" name="partyPlace" class="form-control"></td> 
+                                <td><%= post.place %></td> 
                             </tr>
                             <tr> 
                                 <th style="padding-top: 15px">모임날짜</th> 
-                                <td><input type="date" name="createdate" class="form-control"></td> 
+                                <td><%= post.date %></td> 
                             </tr> 
                         </thead> 
                         <tbody> 
                             <tr> 
-                                <td colspan="2"> <textarea class="form-control" rows="20" name="content" >
-                                    여기에 내용
-                                </textarea> </td> 
-                            </tr> 
-                            <tr>
-                                <th style="padding-top: 15px">첨부파일</th> <td><input type="file" class="btn btn-default" name="fileName"></td> 
+                                <td colspan="2"> <%= post.content %> </td> 
                             </tr> 
                         </tbody> 
                     </table> 

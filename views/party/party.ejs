@@ -17,7 +17,7 @@
                 <% for(let post of posts){ %>
                     <tr>
                         <th><%= post.id %></th>
-                        <th><%= post.title %></th>
+                        <th><a href="/party/post/<%= post.id %>"><%= post.title %></a></th>
                         <th><%= post.place %></th>
                         <th><%= post.date %></th>
                         <th><%= post.createdAt %></th>
