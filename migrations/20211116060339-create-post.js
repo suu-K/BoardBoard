@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      place: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       content: {
         allowNull: false,
         type: Sequelize.TEXT
@@ -23,6 +27,11 @@ module.exports = {
       date:{
         allowNull: false,
         type: Sequelize.DATE
+      },
+      view:{
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        default: 0
       },
       createdAt: {
         allowNull: false,

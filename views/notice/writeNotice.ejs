@@ -1,0 +1,36 @@
+
+<body>
+    <br>
+    <div class="container px-lg-5">
+        <form action="/notice/writeNotice" method="post">
+            <div id="contentForm"> 
+                <input type="hidden" name="pageNum" value="${pageNum}"> 
+                <input type="hidden" name="articleNumber" value="${article.articleNumber}"> 
+                <div class="input-group input-group-sm"> 
+                    <table class="table table-striped table-bordered"> 
+                        <thead>   
+                            <tr> 
+                                <th>제목</th> 
+                                <td><input type="text" name="title" class="form-control"></td> 
+                            </tr>
+                        </thead> 
+                        <tbody> 
+                            <tr> 
+                                <td colspan="2"> <textarea class="form-control" name="content" rows="20" name="content" >
+    공지사항
+
+                                </textarea> </td> 
+                            </tr> 
+                            <tr>
+                                <th style="padding-top: 15px">첨부파일</th> <td><input type="file" class="btn btn-default" name="fileName"></td> 
+                            </tr> 
+                        </tbody> 
+                    </table> 
+                </div> 
+                <div> 
+                    <input type="submit" class="btn bg-light" value="공지 작성"> 
+                    <input type="button" class="btn bg-light" value="뒤로 가기" onclick="document.location.href='/party'"> 
+                </div> 
+            </div> 
+        </form>
+</body>

@@ -1,0 +1,36 @@
+<br>
+<br>
+<div class="container px-lg-5 text-center">
+    <table class="table" style="padding-left: 10%;padding-right: 10%;">
+        <thead>
+            <tr>
+                <th style>번호</th>
+                <th style>제목</th>
+                <th style>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <%if (notices) {%>
+                <% for(let notice of notices){ %>
+                    <tr>
+                        <th><%=notice.id%></th>
+                        <th><%=notice.title%></th>
+                        <th><%=notice.createdAt%></th>
+                </tr>
+                <%}%>
+            <%}%>
+        </tbody>
+    </table>
+</div>
+<div class="container px-lg-5">
+    <%if(session.admin) {%>
+    <button class="btn bg-light" onclick="location.href='notice/writeNotice'" style="position: relative; left: 92%;">공지 작성</button>
+    <%}%>
+</div>
+
+
+
+
+
+

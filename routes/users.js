@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 const models = require("../models");
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const { verifyToken } = require('../middleware/jwt');
+
 
 
 /* GET users listing. */
@@ -14,7 +18,7 @@ res.send("환영합니다 ~");
 });
 //회원가입 화면
 router.get('/join', function(req, res, next) {
-  res.render("user/join");
+  res.render("user/join", { session: req.session });
 });
 //회원가입 요청
 router.post("/join", async function(req,res,next){
@@ -36,21 +40,17 @@ router.post("/join", async function(req,res,next){
 
 //로그인 화면
 router.get('/login', function(req, res, next) {
-  let session = req.session;
-
-  res.render("user/login", {
-      session : session
-  });
+  res.render("user/login", { session : req.session });
 });
 
 // 로그인 요청
-router.post("/login", async function(req,res,next){
+router.post("/login", async function (req, res, next) {
   let body = req.body;
 
   let result = await models.user.findOne({
-      where: {
-          email : body.userEmail
-      }
+    where: {
+      email: body.userEmail
+    }
   });
 
   let dbPassword = result.dataValues.password;
@@ -58,21 +58,51 @@ router.post("/login", async function(req,res,next){
   let salt = result.dataValues.salt;
   let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
 
-  if(dbPassword === hashPassword){
-      console.log("correct password");
-      // 세션 설정
-      req.session.email = body.userEmail;
+  if (dbPassword === hashPassword) {
+    req.session.name = result.dataValues.name;
+    req.session.id = result.dataValues.id;
+    req.session.admin = false;
+    console.log("correct password " + req.session.name);
+
+    //관리자
+    if (result.dataValues.id <= 1) {
+      const adminToken = jwt.sign({
+        id: req.body.id,
+        name: result.dataValues.userName
+      }, process.env.JWT_ADMIN_KEY, {
+        expiresIn: '1h'
+      });
+
+      res.cookie('boardAdmin', adminToken, {
+        httpOnly: true
+      });
+
+      req.session.admin = true;
+    }
+    //유저
+    const token = jwt.sign({
+      id: req.body.id,
+      name: result.dataValues.userName
+    }, process.env.JWT_KEY, {
+      expiresIn: '1h'
+    });
+    // jwt 토큰 설정
+    res.cookie('board', token, {
+      httpOnly: true
+    });
+
+
   }
-  else{
-      console.log("incoreect password");
+  else {
+    console.log("incoreect password");
   }
   res.redirect("/");
 });
 //로그아웃 요청
 router.get("/logout", function(req,res,next){
+  res.clearCookie("board");
+  res.clearCookie("boardAdmin");
   req.session.destroy();
-  res.clearCookie('sid');
-
   res.redirect("/");
 });
 

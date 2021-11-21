@@ -16,13 +16,11 @@ router.get('/', function(req, res, next) {
 
 //페이지 전환
 router.get('/games', function(req, res, next) {
-  res.render('games');
+  res.render('games', { session: req.session });
 });
 
 
-router.get('/notice', function(req, res, next) {
-  res.render('notice');
-});
+
 
 
 module.exports = router;

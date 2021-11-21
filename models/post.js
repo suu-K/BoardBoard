@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { Sequelize } = require('.');
+const { sequelize } = require('.');
 module.exports = (sequelize, DataTypes) => {
   class post extends Model {
     /**
@@ -17,14 +17,20 @@ module.exports = (sequelize, DataTypes) => {
   post.init({
     writerId: DataTypes.INTEGER,
     title: DataTypes.STRING,
+    place: DataTypes.STRING,
     content: DataTypes.TEXT,
-    date: DataTypes.DATEONLY
+    date: DataTypes.DATEONLY,
+    view: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'post',
+    modelName: 'post', 
   });
   post.associate = function (models) {
     post.hasMany(models.reply);
+    post.belongsTo(models.user, {
+      foreignKey: "writerId",
+      sourceKey: "id"
+    })
   };
   return post;
 };

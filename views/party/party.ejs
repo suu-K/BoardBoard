@@ -1,32 +1,38 @@
 <br>
 <br>
-<table class="table" style="padding-left: 10%;padding-right: 10%;">
-    <thead>
-        <tr>
-            <th style>번호</th>
-            <th style>제목</th>
-            <th style>장소</th>
-            <th style>모임일</th>
-            <th style>작성일</th>
-            <th>호스트</th>
-        </tr>
-    </thead>
-    <tbody>
-        <%if (posts) {%>
-            <% for(var post in posts){ %>
-                <tr>
-                    <th><%=post.id%></th>
-                    <th><%=post.title%></th>
-                    <th><%=post.date%></th>
-                    <th><%=post.createdat%></th>
-                    <th><%=post.writer%></th>
+<div class="container px-lg-5 text-center">
+    <table class="table" style="padding-left: 10%;padding-right: 10%;">
+        <thead>
+            <tr>
+                <th style>번호</th>
+                <th style>제목</th>
+                <th style>장소</th>
+                <th style>모임일</th>
+                <th style>작성일</th>
+                <th style>호스트</th>
             </tr>
+        </thead>
+        <tbody>
+            <% if(posts) {%>
+                <% for(let post of posts){ %>
+                    <tr>
+                        <th><%= post.id %></th>
+                        <th><%= post.title %></th>
+                        <th><%= post.place %></th>
+                        <th><%= post.date %></th>
+                        <th><%= post.createdAt %></th>
+                        <th><%= post.user.name %></th>
+                    </tr>
+                <%}%>
             <%}%>
-        <%}%>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+<div class="container px-lg-5">
+    <button class="btn bg-light" onclick="location.href='party/writePost'" style="position: relative; left: 92%;">모임 생성</button>
+</div>
 
-<button>모임 생성</button>
+
 
 
 

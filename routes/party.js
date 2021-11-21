@@ -3,42 +3,56 @@ var router = express.Router();
 const mysql = require('mysql');
 const models = require('../models');
 const reply = require('../models/reply');
-
-let client = mysql.createConnection({
-  user : 'root',
-  password : 1234,
-  database : 'boardboard'
-})
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const { verifyToken } = require('../middleware/jwt');
+const { Sequelize } = require('../models');
 
 //게시판 화면
 router.get('/', function(req, res, next) {
-    let posts = models.post.findAll();
-    res.render('party/party', { posts: posts });
+    models.post.findAll({
+        attributes:[
+            'id', 'title', 'place', 'date',
+            [Sequelize.fn('date_format', Sequelize.col('post.createdAt'), '%Y-%m-%d'), 'createdAt']
+        ],
+        include:{model: models.user}
+    })
+        .then(result => {
+            res.render('party/party', {
+                posts: result,
+                session: req.session
+            });
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
 });
 //게시글 화면
 router.get('/post/:postId', function (req, res, next) {
     let postId = req.params.postId;
 
     models.post.findOne({
-        where: { id: postId },
-        include: {
+        where: { id: postId }
+        /* 댓글 기능
+        ,include: {
             model: [reply],
-
+        */
         }
-    }).then(posts => {
-        res.render('party/party', { posts: posts })
+    ).then(posts => {
+        res.render('party/party', { posts: posts, session: req.session })
     });
 });
-router.get('/writePost', function(req, res, next) {
-    res.render('party/writePost');
+router.get('/writePost', verifyToken, function(req, res, next) {
+    res.render('party/writePost', {session: req.session});
 });
 //게시글 작성 요청
-router.post('/post', function (req, res, next) {
+router.post('/writePost', verifyToken, function (req, res, next) {
     let body = req.body;
 
     let result = models.post.create({
-        writerId: body.id,
+        writerId: req.session.id,
         title: body.title,
+        place: body.place,
         content: body.content,
         date: body.date
     }).then(result => {
@@ -48,7 +62,7 @@ router.post('/post', function (req, res, next) {
     });
 });
 //댓글 작성 요청
-router.post('/reply/:postId', function (req, res, next) {
+router.post('/reply/:postId', verifyToken, function (req, res, next) {
     let body = req.body;
 
     let result = models.reply.create({

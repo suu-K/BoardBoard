@@ -6,9 +6,12 @@ const session = require('express-session');
 var logger = require('morgan');
 const expressLayouts=require('express-ejs-layouts');
 
+require("dotenv").config();
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var partyRouter = require('./routes/party');
+var noticeRouter = require('./routes/notice');
 
 var app = express();
 app.use(expressLayouts);
@@ -24,7 +27,7 @@ models.sequelize.sync().then( () => {
 })
 
 app.use(session({
-  key: 'sid',
+  key: 'user',
   secret: 'secret',
   resave: false,
   saveUninitialized: true,
@@ -50,6 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/party', partyRouter);
+app.use('/notice', noticeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
