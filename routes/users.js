@@ -72,11 +72,9 @@ router.post("/login", async function (req, res, next) {
       }, process.env.JWT_ADMIN_KEY, {
         expiresIn: '1h'
       });
-
       res.cookie('boardAdmin', adminToken, {
         httpOnly: true
       });
-
       req.session.admin = true;
     }
     //유저
@@ -90,8 +88,6 @@ router.post("/login", async function (req, res, next) {
     res.cookie('board', token, {
       httpOnly: true
     });
-
-
   }
   else {
     console.log("incoreect password");

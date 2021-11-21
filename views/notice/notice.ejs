@@ -15,7 +15,7 @@
                 <% for(let notice of notices){ %>
                     <tr>
                         <th><%=notice.id%></th>
-                        <th><%=notice.title%></th>
+                        <th><a href="/notice/<%= notice.id %>"><%=notice.title%></a></th>
                         <th><%=notice.createdAt%></th>
                 </tr>
                 <%}%>

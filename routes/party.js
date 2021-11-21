@@ -32,14 +32,15 @@ router.get('/post/:postId', function (req, res, next) {
     let postId = req.params.postId;
 
     models.post.findOne({
-        where: { id: postId }
+        where: { id: postId },
+        include:{model: models.user}
         /* 댓글 기능
         ,include: {
             model: [reply],
         */
         }
-    ).then(posts => {
-        res.render('party/party', { posts: posts, session: req.session })
+    ).then(post => {
+        res.render('party/readPost', { post: post, session: req.session })
     });
 });
 router.get('/writePost', verifyToken, function(req, res, next) {
@@ -58,7 +59,7 @@ router.post('/writePost', verifyToken, function (req, res, next) {
     }).then(result => {
         res.redirect("/party");
     }).catch(err => {
-        console("게시글 추가 실패");
+        console.log("게시글 추가 실패");
     });
 });
 //댓글 작성 요청
