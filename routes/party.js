@@ -51,7 +51,7 @@ router.post('/writePost', verifyToken, function (req, res, next) {
     let body = req.body;
 
     let result = models.post.create({
-        writerId: req.session.id,
+        writerId: 1,
         title: body.title,
         place: body.place,
         content: body.content,
@@ -59,7 +59,7 @@ router.post('/writePost', verifyToken, function (req, res, next) {
     }).then(result => {
         res.redirect("/party");
     }).catch(err => {
-        console("게시글 추가 실패");
+        console.log(err);
     });
 });
 //댓글 작성 요청
