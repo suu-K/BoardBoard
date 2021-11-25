@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <%if(session.name) {%>
-                    <li class="nav-item"><a class ="nav"><%= session.name %>님 환영합니다.</a></li>
+                    <li class="nav-item nav-link" style="color: whitesmoke;"><%= session.name %>님 환영합니다.</li>
                     <li class="nav-item"><a class="nav-link" href="/users/logout">Logout</a></li>
                 <%}else {%>
                     <li class="nav-item"><a class="nav-link" href="/users/login">Login</a></li>

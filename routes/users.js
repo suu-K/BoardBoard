@@ -67,10 +67,11 @@ router.post("/login", async function (req, res, next) {
     //관리자
     if (result.dataValues.id <= 1) {
       const adminToken = jwt.sign({
-        id: req.body.id,
-        name: result.dataValues.userName
+        id: result.dataValues.id,
+        name: result.dataValues.userName,
+        admin: true
       }, process.env.JWT_ADMIN_KEY, {
-        expiresIn: '1h'
+        expiresIn: '5m'
       });
       res.cookie('boardAdmin', adminToken, {
         httpOnly: true
@@ -79,10 +80,11 @@ router.post("/login", async function (req, res, next) {
     }
     //유저
     const token = jwt.sign({
-      id: req.body.id,
-      name: result.dataValues.userName
+      id: result.dataValues.id,
+      name: result.dataValues.userName,
+      admin: false
     }, process.env.JWT_KEY, {
-      expiresIn: '1h'
+      expiresIn: '5m'
     });
     // jwt 토큰 설정
     res.cookie('board', token, {

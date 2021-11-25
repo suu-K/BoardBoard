@@ -1,3 +1,4 @@
+const session = require('express-session');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -5,6 +6,9 @@ exports.verifyToken = (req, res, next) => {
 	try
 	{
 		req.decoded = jwt.verify(req.cookies.board, "" +process.env.JWT_KEY);
+		req.session.name = req.decoded.name;
+		req.session.id = req.decoded.id;
+		req.session.admin = req.decoded.admin;
 		return next();
 	}
 	catch (error) {
@@ -13,15 +17,9 @@ exports.verifyToken = (req, res, next) => {
 		}
 
 		if (error.name === 'TokenExpiredError') {
-	  		return res.status(419).json({
-	    		code: 419,
-	    		message: '토큰만료'
-	  		});
+			res.send("<script>alert('다시 로그인해주세요.');location.href='/users/login';</script>");
 		}
 
-		return res.status(401).json({
-			code: 401,
-	  		message: '유효하지 않은 토큰'
-		});
+		res.send("<script>alert('로그인이 필요합니다.');location.href='/users/login';</script>");
 	}
 };

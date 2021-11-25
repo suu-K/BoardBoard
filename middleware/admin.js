@@ -12,15 +12,9 @@ exports.verifyAdmin = (req, res, next) => {
 			req.session.destroy();
 		}
 		if (error.name === 'TokenExpiredError') {
-	  		return res.status(419).json({
-	    		code: 419,
-	    		message: '토큰만료'
-	  		});
+			res.send("<script>alert('다시 로그인해주세요.');location.href='/users/login';</script>");
 		}
 
-		return res.status(401).json({
-			code: 401,
-	  		message: '유효하지 않은 토큰'
-		});
+		res.send("<script>alert('관리자만 접근 가능합니다.');location.href='/users/login';</script>");
 	}
 };

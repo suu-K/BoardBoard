@@ -28,6 +28,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      max:{
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       view:{
         allowNull: false,
         type: Sequelize.INTEGER,

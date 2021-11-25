@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   user.associate = function (models) {
     user.hasMany(models.post, { foreignKey: "writerId", sourceKey: "id"});
+    user.hasMany(models.reply, { foreignKey: "writerId", sourceKey: "id"});
+    post.hasMany(models.participant, { foreignKey: "userId", sourceKey: "id"});
   };
   return user;
 };
