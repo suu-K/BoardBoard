@@ -16,19 +16,20 @@
         </table>
     </div>
     <div class="container px-lg-5 text-center" style="padding-top: 2%;">
-        <table class="table-striped table-bordered" style="width: 100%;">
+        <table class="table" style="width: 100%;">
             <thead>
-                <tr>
-                    <td>이미지</td>
-                    <td>4~6인용</td>
-                    <td>6~8인용</td>
-                </tr>
-                <tr>
-                    <td>3~4인용</td>
-                    <td>4~6인용</td>
-                    <td>6~8인용</td>
-                </tr>
-            <thead>
+                <%for(var i=0;i<5;i++) {%>
+                    <tr height="200px">
+                        <td><a>이미지<a></td>
+                        <td>이미지</td>
+                        <td>이미지</td>
+                    </tr>
+                    <tr>
+                        <td>게임 이름</td>
+                        <td>게임 이름</td>
+                        <td>게임 이름</td>
+                    </tr>
+                <%}%>
         </table>
     </div>
 </body>
