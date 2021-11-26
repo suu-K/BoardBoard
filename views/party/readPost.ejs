@@ -1,3 +1,59 @@
+<script>
+        function partyJoin(id) {
+            var result;
+            $.ajax({
+                data: { participantId: id }
+                , url: 'partyJoin'
+                , type: 'POST'
+                , dataType: 'json'
+                , async: ture
+                , success: function (data) {
+                    buildTable(myArray);
+                    function buildTable(data) {
+                        var table = document.getElementById('table1');
+                        for (var participant of data.participants) {
+                            var row = `<tr><td><a href="javascript:.partyJoin(<%=participant.id%>)"><%=participant.name%></a></td></tr>`;
+                            table.innerHTML += row;
+                        }
+                        var table = document.getElementById('table2');
+                        for (var aparticipant of data.aParticipants) {
+                            var row = `<tr><td><a href="javascript:.partyExit(<%=aParticipant.id%>)"><%=aParticipant.name%></a></td></tr>`;
+                            table.innerHTML += row;
+                        }
+                    }
+                }
+            });
+            return result;
+        }
+        function partyExit(id) {
+            var result;
+            $.ajax({
+                data: { participantId: id }
+                , url: 'partyExit'
+                , type: 'POST'
+                , dataType: 'json'
+                , async: ture
+                , success: function (data) {
+                    buildTable(myArray);
+                    function buildTable(data) {
+                        var table = document.getElementById('table1');
+                        for (var participant of data.participants) {
+                            var row = `<tr><td><a href="javascript:.partyJoin(<%=participant.id%>)"><%=participant.name%></a></td></tr>`;
+                            table.innerHTML += row;
+                        }
+                        var table = document.getElementById('table2');
+                        for (var aparticipant of data.aParticipants) {
+                            var row = `<tr><td><a href="javascript:.partyExit(<%=aParticipant.id%>)"><%=aParticipant.name%></a></td></tr>`;
+                            table.innerHTML += row;
+                        }
+                    }
+                }
+            });
+            return result;
+        }
+        
+
+</script>
 <body>
     <br>
     <br>
@@ -29,22 +85,32 @@
                         </tbody> 
                     </table>
                     
-                    <div style="padding-left: 20%; padding-right: 20%;">
-                        <mem style="font-size: larger; position: relative; left:95%;">2/8</mem>
-                        <table class="table table-striped table-bordered text-center">
-                            <thead>
-                                <%if(session) { //로그인시%>
-                                <%//for(참가자 수/2만큼 반복)%>
-                                <tr height="55">
-                                    <td width="50%"><%= post.user.name%><e style="font-size: larger;">★</e></td>
-                                    <td width="50%">다른 참여자</td>
-                                </tr>
-                                <tr height="55">
-                                    <td width="50%">다른 참여자</td>
-                                    <td width="50%"><input type="button" class="form-control" value="참여하기"></td>
-                                </tr>
-                                <%}%>
-                            </thead>
+                    <div style="height: 250px;">
+                        <table class="table">
+                            <%if(participants) {%>
+                                <th width="50%">
+                                    <br>
+                                    <div style="overflow: auto; height: 200px;">
+                                        <table class="table" id="table1">
+                                            <%for(var participant of participants) {%>
+                                            <tr><td><a href="javascript:.partyJoin(<%=participant.id%>)"><%=participant.name%></a></td></tr>
+                                            <%}%>
+                                        </table>
+                                    </div>
+                                </th>
+                            <%}%>
+                            <td>
+                                <mem style="font-size: larger; position: relative; left:95%;"><%=aParticipants.mem%>/</mem>
+                                <table class="table table-striped table-bordered text-center" id="table2">
+                                    <thead>
+                                            <%for(let participant of aParticipants)%>
+                                                <tr height="55">
+                                                    <td><a href="javascript:.partyExit(<%=aParticipant.id%>)"><%=aParticipant.name%></a></td>
+                                                </tr>
+                                            <%}%>
+                                    </thead>
+                                </table>
+                            </td>                       
                         </table>
                     </div>
                     <br>

@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const { verifyToken } = require('../middleware/jwt');
 const { Sequelize } = require('../models');
 const { route } = require('.');
+const { application } = require('express');
 
 //게시판 화면
 router.get('/', function(req, res, next) {
@@ -188,3 +189,4 @@ router.post('/accept/:postId/:userId', verifyToken, function(req, res, next){
 });
 
 module.exports = router;
+
