@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user.hasMany(models.post, { foreignKey: "writerId", sourceKey: "id" });
+      user.hasMany(models.reply, { foreignKey: "writerId", sourceKey: "id" });
+      user.hasMany(models.participant, { foreignKey: "userId", sourceKey: "id"});
     }
   };
   user.init({
@@ -36,10 +39,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'user',
   });
-  user.associate = function (models) {
-    user.hasMany(models.post, { foreignKey: "writerId", sourceKey: "id"});
-    user.hasMany(models.reply, { foreignKey: "writerId", sourceKey: "id"});
-    post.hasMany(models.participant, { foreignKey: "userId", sourceKey: "id"});
-  };
   return user;
 };

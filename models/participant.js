@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      participant.belongsTo(models.post, {
+        foreignKey: "postId",
+        targetKey: "id"
+      });
+      participant.belongsTo(models.user, {
+        foreignKey: "userId",
+        targetKey: "id"
+      });
     }
   };
   participant.init({
@@ -19,17 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     accept: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Participant',
+    modelName: 'participant',
   });
-  participant.associate = function(models){
-    participant.belongsTo(models.post, {
-      foreignKey: "postId",
-      sourceKey: "id"
-    });
-    participant.belongsTo(models.user, {
-      foreignKey: "userId",
-      sourceKey: "id"
-    });
-  };
   return participant;
 };

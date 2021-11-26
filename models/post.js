@@ -11,7 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // define association here)
+      post.hasMany(models.reply, { foreignKey: "postId", sourceKey: "id" });
+      post.hasMany(models.participant, { foreignKey: "postId", sourceKey: "id"});
+      post.belongsTo(models.user, {
+        foreignKey: "writerId",
+        sourceKey: "id"
+      });
     }
   };
   post.init({
@@ -26,13 +32,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'post', 
   });
-  post.associate = function (models) {
-    post.hasMany(models.reply, { foreignKey: "postId", sourceKey: "id"});
-    post.hasMany(models.participant, { foreignKey: "postId", sourceKey: "id"});
-    post.belongsTo(models.user, {
-      foreignKey: "writerId",
-      sourceKey: "id"
-    })
-  };
   return post;
 };

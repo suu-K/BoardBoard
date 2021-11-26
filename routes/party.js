@@ -31,14 +31,30 @@ router.get('/', function(req, res, next) {
 //게시글 화면
 router.get('/post/:postId', function (req, res, next) {
     let postId = req.params.postId;
-
+    
+    let participants = models.participant.findAll({
+        where: { postId: req.params.postId, accept:false },
+        include:[
+            {model: models.user}
+        ]
+    }).catch(err => {
+        console.log(err);
+    });
+    let acceptedParticipants = models.participant.findAll({
+        where: { postId: req.params.postId, accept:true },
+        include:[
+            {model: models.user}
+        ]
+    }).catch(err=>{
+        console.log(err);
+    });
     models.post.findOne({
         where: { id: postId },
         include: [
             { model: models.user },
             { 
                 model: models.reply,
-                include: { model: models.user },
+                include: { model: models.user, attributes: ['name'] },
                 order: 'createdAt DESC',
                 required: false
             }
@@ -46,7 +62,12 @@ router.get('/post/:postId', function (req, res, next) {
     }).then(post => {
         try{
             console.log("success");
-        res.render('party/readPost', { post: post, session: req.session })
+            res.render('party/readPost', { 
+                post: post,
+                participants: participants,
+                aParticipants: acceptedParticipants,
+                session: req.session
+            });
         }
         catch(err){
             console.log("err");
@@ -143,13 +164,13 @@ router.post('/replyPost/delete/:replyId', verifyToken, function(req, res, next){
 });
 
 //참가 신청
-router.post('/apply/:postId', verifyToken, function(req, res, next){
+router.post('/apply', verifyToken, function(req, res, next){
     models.participant.create({
-        postId: req.params.postId,
+        postId: req.body.postId,
         userId: req.session.id,
         accept: false
     }).then(result => {
-        res.redirect("/party/post/"+req.params.postId);
+        res.json({participant: result});
     }).catch(err => {
         console.log(err);
     });

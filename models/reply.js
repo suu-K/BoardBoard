@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      reply.belongsTo(models.post, {
+        foreignKey: "postId",
+        sourceKey: "id"
+      });
+      reply.belongsTo(models.user, {
+        foreignKey: "writerId",
+        sourceKey: "id"
+      });
     }
   };
   reply.init({
@@ -22,15 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'reply',
   });
-  reply.associate = function(models){
-    reply.belongsTo(models.post, {
-      foreignKey: "postId",
-      sourceKey: "id"
-    });
-    reply.belongsTo(models.user, {
-      foreignKey: "writerId",
-      sourceKey: "id"
-    });
-  };
   return reply;
 };
