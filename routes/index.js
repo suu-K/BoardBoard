@@ -14,13 +14,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { session: req.session });
 });
 
-//페이지 전환
-router.get('/games', function(req, res, next) {
-  res.render('games', { session: req.session });
-});
-
-
-
-
-
 module.exports = router;
