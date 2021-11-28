@@ -52,6 +52,9 @@ router.post("/login", async function (req, res, next) {
       email: body.userEmail
     }
   });
+  if(!result){
+    res.send("<script>alert('아이디 혹은 비밀번호가 틀렸습니다.');location.href='/users/login';</script>");
+  }
 
   let dbPassword = result.dataValues.password;
   let inputPassword = body.password;
@@ -60,15 +63,14 @@ router.post("/login", async function (req, res, next) {
 
   if (dbPassword === hashPassword) {
     req.session.name = result.dataValues.name;
-    req.session.id = result.dataValues.id;
+    req.session.userId = result.dataValues.id;
     req.session.admin = false;
     console.log("correct password " + req.session.name);
-
     //관리자
     if (result.dataValues.id <= 1) {
       const adminToken = jwt.sign({
         id: result.dataValues.id,
-        name: result.dataValues.userName,
+        name: result.dataValues.name,
         admin: true
       }, process.env.JWT_ADMIN_KEY, {
         expiresIn: '5m'
@@ -81,7 +83,7 @@ router.post("/login", async function (req, res, next) {
     //유저
     const token = jwt.sign({
       id: result.dataValues.id,
-      name: result.dataValues.userName,
+      name: result.dataValues.name,
       admin: false
     }, process.env.JWT_KEY, {
       expiresIn: '5m'
@@ -92,7 +94,7 @@ router.post("/login", async function (req, res, next) {
     });
   }
   else {
-    console.log("incoreect password");
+    res.send("<script>alert('아이디 혹은 비밀번호가 틀렸습니다.');location.href='/users/login';</script>");
   }
   res.redirect("/");
 });

@@ -6,9 +6,6 @@ exports.verifyToken = (req, res, next) => {
 	try
 	{
 		req.decoded = jwt.verify(req.cookies.board, "" +process.env.JWT_KEY);
-		req.session.name = req.decoded.name;
-		req.session.id = req.decoded.id;
-		req.session.admin = req.decoded.admin;
 		return next();
 	}
 	catch (error) {
