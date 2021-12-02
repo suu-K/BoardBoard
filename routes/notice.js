@@ -52,19 +52,28 @@ router.post('/writeNotice', verifyAdmin, function (req, res, next) {
         console("게시글 추가 실패");
     });
 });
-//댓글 작성 요청
-router.post('/reply/:postId', function (req, res, next) {
+//공지 수정 요청
+router.post('/writeNotice/update/:noticeId', verifyAdmin, function (req, res, next) {
     let body = req.body;
 
-    let result = models.reply.create({
-        postId: req.params.postId,
-        writerId: body.writerId,
-        content: body.content,
-        accept: null
-    }).then(result => {
-        res.redirect("/notice/post/:postId");
+    models.notice.update({
+        title: body.title,
+        content: body.content
+    }, { where: { id:req.params.noticeId } }
+    ).then(result => {
+        res.redirect("/notice/:noticeId");
     }).catch(err => {
-        console.log("댓글 추가 실패");
+        console.log(err);
+    });
+});
+//공지 삭제 요청
+router.post('/writeNotice/delete/:noticeId', verifyAdmin, function(req, res, next){
+    models.notice.destroy({ 
+        where: { id: req.params.noticeId} 
+    }).then(function(result){
+        res.redirect("/notice");
+    }).catch(err => {
+        console.log(err);
     });
 });
 
