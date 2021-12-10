@@ -17,4 +17,8 @@ router.get('/readGames', function(req, res, next) {
     res.render('games/readGames', { session: req.session });
 });
 
+router.get('/writeGames', function(req, res, next) {
+    res.render('games/writeGames', { session: req.session });
+});
+
 module.exports = router;
