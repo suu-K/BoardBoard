@@ -1,62 +1,3 @@
-<script>
-    function partyJoin(id) {
-        var result;
-        $.ajax({
-            data: { participantId: id }
-            , url: '/party/join/<%= post.id %>'
-            , type: 'POST'
-            , dataType: 'json'
-            , async: ture
-            , success: function (data) {
-                buildTable(myArray);
-                function buildTable(data) {
-                    var table = document.getElementById('table1');
-                    for (var participant of data.participants) {
-                        var row = "<tr><td><a href='javascript:partyJoin("+participant.id+")'>"+participant.name+"</a></td></tr>";
-                        table.innerHTML += row;
-                    }
-                    var table = document.getElementById('table2');
-                    for (var aparticipant of data.aParticipants) {
-                        var row = "<tr><td><a href='javascript:partyExit("+aParticipant.id+")'>"+aParticipant.name+"</a></td></tr>";
-                        table.innerHTML += row;
-                    }
-                }
-            }
-            ,error: function(){
-                console.log("ajax errer");
-            }
-        });
-        return result;
-    }
-    function partyExit(id) {
-        var result;
-        $.ajax({
-            data: { participantId: id }
-            , url: '/party/exit/<%= post.id %>'
-            , type: 'POST'
-            , dataType: 'json'
-            , async: ture
-            , success: function (data) {
-                buildTable(myArray);
-                function buildTable(data) {
-                    var table = document.getElementById('table1');
-                    for (var participant of data.participants) {
-                        var row = "<tr><td><a href='javascript:partyJoin("+participant.id+")'>"+participant.name+"</a></td></tr>";
-                        table.innerHTML += row;
-                    }
-                    var table = document.getElementById('table2');
-                    for (var aparticipant of data.aParticipants) {
-                        var row = "<tr><td><a href='javascript:partyExit("+aParticipant.id+")'>"+aParticipant.name+"</a></td></tr>";
-                        table.innerHTML += row;
-                    }
-                }
-            }
-        });
-        return result;
-    }    
-</script>
-
-
 <body>
 <br>
 <br>
@@ -96,7 +37,7 @@
                                     <table class="table" id="table1">
                                     <% if(participants){ %>
                                         <% for(let participant of participants){ %>
-                                        <tr><td><a href="javascript:partyJoin(<%=participant.id%>);"><%=participant.user.name%></a></td></tr>
+                                        <tr><td><a href="javascript:partyJoin(<%=post.id%>,<%=participant.id%>);"><%=participant.user.name%></a></td></tr>
                                         <% } %>
                                     <%}%>
                                     </table>
@@ -109,7 +50,7 @@
                                     <% if(aParticipants){ %>
                                         <% for(let aParticipant of aParticipants){ %>
                                             <tr height="55">
-                                                <td><a href="javascript:.partyExit(<%=aParticipant.id%>)"><%=aParticipant.user.name%></a></td>
+                                                <td><a href="javascript:partyExit(<%=post.id%>,<%=aParticipant.id%>)"><%=aParticipant.user.name%></a></td>
                                             </tr>
                                         <%}%>
                                     <% } %>

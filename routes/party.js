@@ -210,6 +210,33 @@ router.post('/join/:postId', verifyToken, function(req, res, next){
 
     res.json({participants: participants, aParticipants: acceptedParticipants});
 });
+//참가 취소
+router.post('/exit/:postId', verifyToken, function(req, res, next){
+    models.participant.update({ accept: false },
+        { where: { id: req.body.participantId }}
+    ).catch(err => {
+        console.log(err);
+    });
+
+    let participants = models.participant.findAll({
+        where: { postId: req.params.postId, accept:false },
+        include:[
+            {model: models.user}
+        ]
+    }).catch(err => {
+        console.log(err);
+    });
+    let acceptedParticipants = models.participant.findAll({
+        where: { postId: req.params.postId, accept:true },
+        include:[
+            {model: models.user}
+        ]
+    }).catch(err=>{
+        console.log(err);
+    });
+
+    res.json({participants: participants, aParticipants: acceptedParticipants});
+});
 //참가 탈퇴
 router.post('/accept/:postId/:userId', verifyToken, function(req, res, next){
     models.participant.update(
