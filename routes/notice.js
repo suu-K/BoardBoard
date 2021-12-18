@@ -9,24 +9,80 @@ const { Sequelize } = require('../models');
 
 //공지사항 목록 화면
 router.get('/', function (req, res, next) {
+    let pageNum = 1; // 요청 페이지 넘버
+    let offset = 0;
+    let count = models.notice.count({});
+    const getData = () => {
+        count.then((appData) => {
+          count = appData;
+        });
+    };
+    getData();
+    let limit = 7;
+    if (pageNum > 1) {
+        offset = limit * (pageNum - 1);
+    }
+
     models.notice.findAll({
+        offset: offset,
+        limit: limit,
         attributes:[
             'id', 'title',
             [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%Y-%m-%d'), 'createdAt']
-        ]
+        ],
+        order: [["id", "desc"]]
     })
-        .then(result => {
-            res.render('notice/notice', {
-                notices: result,
-                session: req.session
-            });
-        })
-        .catch(function (err) {
-            console.log(err);
+    .then(result => {
+        res.render('notice/notice', {
+            notices: result,
+            session: req.session,
+            pageNum: pageNum,
+            count: Math.ceil(count/limit),
         });
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+});
+
+router.get('/:page', function(req, res, next) {
+    let pageNum = req.query.page; // 요청 페이지 넘버
+    let offset = 0;
+    let count = models.notice.count({});
+    const getData = () => {
+        count.then((appData) => {
+          count = appData;
+        });
+    };
+    getData();
+    let limit = 7;
+    if (pageNum > 1) {
+        offset = limit * (pageNum - 1);
+    }
+
+    models.notice.findAll({
+        offset: offset,
+        limit: limit,
+        attributes:[
+            'id', 'title',
+            [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%Y-%m-%d'), 'createdAt']
+        ],
+        order: [["id", "desc"]]
+    })
+    .then(result => {
+        res.render('notice/notice', {
+            notices: result,
+            session: req.session,
+            pageNum: pageNum,
+            count: Math.ceil(count/limit),
+        });
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
 });
 //공지사항 화면
-router.get('/:noticeId', function (req, res, next) {
+router.get('/post/:noticeId', function (req, res, next) {
     let noticeId = req.params.noticeId;
 
     models.notice.findOne({ where: { id: noticeId }}

@@ -37,7 +37,7 @@
                                     <table class="table" id="table1">
                                     <% if(participants){ %>
                                         <% for(let participant of participants){ %>
-                                        <tr><td><a href="javascript:partyJoin(<%=post.id%>,<%=participant.id%>);"><%=participant.user.name%></a></td></tr>
+                                        <tr><td><% if(session.userId == post.writerId){ %><a href="javascript:partyJoin(<%=post.id%>,<%=participant.id%>);"><%}%><%=participant.user.name%><% if(session.userId == post.writerId){ %></a><%}%></td></tr>
                                         <% } %>
                                     <%}%>
                                     </table>
@@ -60,13 +60,11 @@
                     </table>
                 </div>
                 <br>
-                <% if(session.name){ %>
+                <% if(session.userId == post.writerId){ %>
                 <div style="padding-bottom: 2%;">
-                    <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="수정" onclick="document.location.href='/party/update/<%=post.id%>'">
                     <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="삭제" onclick="document.location.href='/party/delete/<%=post.id%>'"> 
-                
+                <% }else{ %>
                     <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="참가신청" onclick="document.location.href='/party/apply/<%=post.id%>'"> 
-                
                 </div>
                 <%}%>
                 <table class="table table-striped table-bordered"> 

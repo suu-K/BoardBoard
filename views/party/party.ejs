@@ -26,7 +26,15 @@
                 <%}%>
             <%}%>
         </tbody>
+        
     </table>
+    <% if(posts){ %>
+        <%if(pageNum>1){%> <a href="/party/<%=pageNum-1%>" <%}%> << <%if(pageNum>1){%> </a> <%}%>
+        <% for(let i = 1; i <= count; i++){ %>
+            [<%if(pageNum==i){%> <b> <%}%><a href="/party/<%=i%>"><%=i%></a><%if(pageNum==i){%> </b> <%}%>]
+        <%}%>
+        <%if(pageNum<count){%> <a href="/party/<%=pageNum+1%>" <%}%> >> <%if(pageNum>1){%> </a> <%}%>
+    <%}%>
 </div>
 <%if(session.name) {%>
 <div class="container px-lg-5">

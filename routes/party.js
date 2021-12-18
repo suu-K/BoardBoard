@@ -12,17 +12,76 @@ const { application } = require('express');
 
 //게시판 화면
 router.get('/', function(req, res, next) {
+    let pageNum = 1; // 요청 페이지 넘버
+    let offset = 0;
+    let count = models.post.count({});
+    const getData = () => {
+        count.then((appData) => {
+          count = appData;
+        });
+    };
+    getData();
+    let limit = 7;
+    if (pageNum > 1) {
+        offset = limit * (pageNum - 1);
+    }
+
     models.post.findAll({
+        offset: offset,
+        limit: limit,
         attributes:[
             'id', 'title', 'place', 'date',
             [Sequelize.fn('date_format', Sequelize.col('post.createdAt'), '%Y-%m-%d'), 'createdAt']
         ],
-        include:{model: models.user}
+        include:{model: models.user},
+        order: [["id", "desc"]]
     })
     .then(result => {
         res.render('party/party', {
             posts: result,
-            session: req.session
+            session: req.session,
+            pageNum: pageNum,
+            count: Math.ceil(count/limit),
+            limit: limit
+        });
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+});
+
+router.get('/:page', function(req, res, next) {
+    let pageNum = req.query.page; // 요청 페이지 넘버
+    let offset = 0;
+    let count = models.post.count({});
+    const getData = () => {
+        count.then((appData) => {
+          count = appData;
+        });
+    };
+    getData();
+    let limit = 7;
+    if (pageNum > 1) {
+        offset = limit * (pageNum - 1);
+    }
+
+    models.post.findAll({
+        offset: offset,
+        limit: limit,
+        attributes:[
+            'id', 'title', 'place', 'date',
+            [Sequelize.fn('date_format', Sequelize.col('post.createdAt'), '%Y-%m-%d'), 'createdAt']
+        ],
+        include:{model: models.user},
+        order: [["id", "desc"]]
+    })
+    .then(result => {
+        res.render('party/party', {
+            posts: result,
+            session: req.session,
+            pageNum: pageNum,
+            count: Math.ceil(count/limit),
+            limit: limit
         });
     })
     .catch(function (err) {
@@ -208,7 +267,7 @@ router.post('/join/:postId', verifyToken, function(req, res, next){
         console.log(err);
     });
 
-    res.json({participants: participants, aParticipants: acceptedParticipants});
+    res.send({participants: participants, aParticipants: acceptedParticipants});
 });
 //참가 취소
 router.post('/exit/:postId', verifyToken, function(req, res, next){

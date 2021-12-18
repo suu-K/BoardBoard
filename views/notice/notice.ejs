@@ -15,22 +15,23 @@
                 <% for(let notice of notices){ %>
                     <tr>
                         <th><%=notice.id%></th>
-                        <th><a href="/notice/<%= notice.id %>"><%=notice.title%></a></th>
+                        <th><a href="/notice/post/<%= notice.id %>"><%=notice.title%></a></th>
                         <th><%=notice.createdAt%></th>
                 </tr>
                 <%}%>
             <%}%>
         </tbody>
     </table>
+    <% if(notices){ %>
+        <%if(pageNum>1){%> <a href="/notice/<%=pageNum-1%>" <%}%> << <%if(pageNum>1){%> </a> <%}%>
+        <% for(let i = 1; i <= count; i++){ %>
+            [<%if(pageNum==i){%> <b> <%}%><a href="/notice/<%=i%>"><%=i%></a><%if(pageNum==i){%> </b> <%}%>]
+        <%}%>
+        <%if(pageNum<count){%> <a href="/notice/<%=pageNum+1%>" <%}%> >> <%if(pageNum>1){%> </a> <%}%>
+    <%}%>
 </div>
 <div class="container px-lg-5">
     <%if(session.admin) {%>
-    <button class="btn bg-light" onclick="location.href='notice/writeNotice'" style="position: relative; left: 92%;">공지 작성</button>
+    <button class="btn bg-light" onclick="location.href='/notice/writeNotice'" style="position: relative; left: 92%;">공지 작성</button>
     <%}%>
 </div>
-
-
-
-
-
-

@@ -21,7 +21,7 @@
                 <%for(var i=0;i<5;i++) {%>
                     <tr height="200px">
                         <td><a href='/games/readGames'>이미지<a></td>
-                        <td>이미지</td>
+                        <td><img src="/images/할리갈리-1639850115934.jfif" alt="" /> </td>
                         <td>이미지</td>
                     </tr>
                     <tr>
@@ -32,5 +32,9 @@
                 <%}%>
         </table>
     </div>
-    
+    <div class="container px-lg-5">
+        <%if(session.admin) {%>
+        <button class="btn bg-light" onclick="location.href='/games/writeGame'" style="position: relative; left: 92%;">게임 추가</button>
+        <%}%>
+    </div>
 </body>
