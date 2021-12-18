@@ -1,19 +1,16 @@
 <body>
     <div class="container px-lg-5 text-center" style="padding-top: 2%;">
-        <table class="table table-bordered" style="width: 100%;">
-            <thead>
-                <%for(var i=0;i<5;i++) {%>
+        <table class="table text-center">
+            <%for(var i=0;i<5;i++) {%>
+                <thead>
                     <tr height="200px">
-                        <td><a href='/games/readGames'>이미지<a></td>
-                        <td><img src="/images/할리갈리-1639850115934.jfif" alt="" /> </td>
-                        <td>이미지</td>
+                        <td><a href='/games/readGames'><img src="/images/할리갈리-1639850115934.jfif" height="500" /></a></td>
                     </tr>
                     <tr>
-                        <td>게임 이름</td>
-                        <td>게임 이름</td>
-                        <td>게임 이름</td>
+                        <td><a href='/games/readGames'>게임 이름</a></td>
                     </tr>
-                <%}%>
+                </thead>
+            <%}%>
         </table>
     </div>
     <div class="container px-lg-5">
