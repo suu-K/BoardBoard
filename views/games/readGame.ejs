@@ -10,36 +10,35 @@
                         <thead>   
                             <tr> 
                                 <th>제목</th> 
-                                <td>= games.title</td> 
+                                <td><%= game.name%></td> 
                             </tr>
                             <tr> 
                                 <th width="30%">게임 인원</th> 
-                                <td width="70%">= games.member</td> 
+                                <td width="70%"><%= game.member%></td> 
                             </tr> 
                             <tr> 
                                 <th>게임 시간</th> 
-                                <td>=games.time</td>
+                                <td><%=game.time%></td>
                             </tr>
                             <tr> 
                                 <th>난이도</th> 
-                                <td>= post.level</td> 
+                                <td><%= game.level%></td> 
                             </tr>
                             <tr> 
                                 <th style="padding-top: 15px">방식</th> 
-                                <td>= games.type</td> 
+                                <td><%= game.method%></td> 
                             </tr> 
                         </thead> 
                         <tbody> 
                             <tr> 
-                                <td colspan="2"><pre style="font-size: large;">=games.content</pre></td> 
+                                <td colspan="2"><pre style="font-size: large;"><%=game.content%></pre></td> 
                             </tr>
                         </tbody> 
                     </table> 
                 </div> 
                 <%if(session.admin) {%>
                     <div style="padding-bottom: 2%;">
-                        <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="수정" onclick="document.location.href='/games'">
-                        <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="삭제" onclick="document.location.href='/games'"> 
+                        <input type="button" class="btn bg-light" style="position: relative; left: 87%;" value="삭제" onclick="document.location.href='/games/writeGame/delete/<%= game.id %>'"> 
                     </div>
                     <%}%>
                 <div> 

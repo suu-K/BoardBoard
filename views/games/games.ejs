@@ -2,19 +2,24 @@
     <div class="container px-lg-5 text-center" style="padding-top: 2%;">
         <table class="table table-bordered" style="width: 100%;">
             <thead>
-                <%for(var i=0;i<5;i++) {%>
+                <% if(games){ %>
+                <%for(let game of games) {%>
                     <tr height="200px">
-                        <td><a href='/games/readGames'>이미지<a></td>
-                        <td><img src="/images/할리갈리-1639850115934.jfif" alt="" /> </td>
-                        <td>이미지</td>
+                        <td><a href='/games/readGame/<%= game.id %>'><img src='<%= game.image %>' /></a> </td>
                     </tr>
                     <tr>
-                        <td>게임 이름</td>
-                        <td>게임 이름</td>
-                        <td>게임 이름</td>
+                        <td><a href='/games/readGame/<%= game.id %>'><%= game.name %></a></td>
                     </tr>
                 <%}%>
+                <% } %>
         </table>
+        <% if(games){ %>
+            <%if(pageNum>1){%> <a href="/games/<%=pageNum-1%>" <%}%> << <%if(pageNum>1){%> </a> <%}%>
+            <% for(let i = 1; i <= count; i++){ %>
+                [<%if(pageNum==i){%> <b> <%}%><a href="/games/readGame/<%=i%>"><%=i%></a><%if(pageNum==i){%> </b> <%}%>]
+            <%}%>
+            <%if(pageNum<count){%> <a href="/games/<%=pageNum+1%>" <%}%> >> <%if(pageNum>1){%> </a> <%}%>
+        <%}%>
     </div>
     <div class="container px-lg-5">
         <%if(session.admin) {%>
