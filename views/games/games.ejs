@@ -5,7 +5,7 @@
                 <% if(games){ %>
                 <%for(let game of games) {%>
                     <tr height="200px">
-                        <td><a href='/games/readGame/<%= game.id %>'><img src='<%= game.image %>' /></a> </td>
+                        <td><a href='/games/readGame/<%= game.id %>'><img src='<%= game.image %>' height="500"/></a> </td>
                     </tr>
                     <tr>
                         <td><a href='/games/readGame/<%= game.id %>'><%= game.name %></a></td>
